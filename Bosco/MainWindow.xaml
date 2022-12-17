@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bosco"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        WindowState="Maximized"
+        MinWidth="1280"
+        MinHeight="720"
+        Height="720"
+        Width="1280"
+        Title="MainWindow">
+    
+    <Window.DataContext>
+        <local:MainWindowNavigation/>
+    </Window.DataContext>
     <Grid>
-
+        <ContentControl Content="{Binding Path=SelectedView}"/>
     </Grid>
 </Window>
