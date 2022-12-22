@@ -1,4 +1,6 @@
-﻿using Bosco.Core.Services;
+﻿using Bosco.Core.Data;
+using Bosco.Core.Services;
+using Bosco.Core.ViewModels;
 using Bosco.XAML.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,13 +17,16 @@ public partial class App : Application
 		AppHost = Host.CreateDefaultBuilder()
 			.ConfigureServices(ServiceConfiguration)
 			.Build();
+		
 	}
 	private void ServiceConfiguration(HostBuilderContext context, IServiceCollection services)
 	{
 		services
-			.AddSingleton<MainWindowNavigation>()
-			.AddSingleton<IFrontendNotifier, FrontendNotifier>()
-			.AddSingleton<IView,ProductView>();
+			.AddSingleton<CategoriesDb>()
+			.AddSingleton<CategoryViewModel>()
+			.AddSingleton<IView, ProductView>()
+			.AddSingleton<IView, CategoryView>()
+			.AddSingleton<MainWindowNavigation>();
 	}
 
     protected override async void OnStartup(StartupEventArgs e)
@@ -34,4 +39,11 @@ public partial class App : Application
 
         base.OnStartup(e);
     }
+
+	protected override async void OnExit(ExitEventArgs e)
+	{
+		await AppHost!.StopAsync();
+
+		base.OnExit(e);
+	}
 }

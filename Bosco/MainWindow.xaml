@@ -10,8 +10,46 @@
         MinHeight="720"
         Height="720"
         Width="1280"
-        Title="MainWindow">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        AutomationProperties.Name="{Binding Title, RelativeSource={RelativeSource Self}}"
+        Style="{StaticResource MaterialDesignWindow}"
+        Title="Bosco">
     <Grid>
-        <ContentControl Content="{Binding Path=SelectedView, UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ItemsControl ItemsSource="{Binding Path=ViewNames}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding Path=DataContext.Nav_Command,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                            CommandParameter="{Binding}"
+                            Style="{StaticResource NavButton}">
+                        
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="{Binding Path=Icon}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Path=Name}"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Separator Background="{DynamicResource SecondaryHueMidBrush}"
+                   Grid.Row="1"/>
+
+        <ContentControl
+            Grid.Row="2"
+            Content="{Binding Path=Views.SelectedView, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </Window>

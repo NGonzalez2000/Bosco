@@ -1,6 +1,5 @@
 ﻿using Bosco.Core.Services;
-using Bosco.Core.ViewModels;
-using System.Windows;
+using MaterialDesignThemes.Wpf;
 using System.Windows.Controls;
 
 namespace Bosco.XAML.Views;
@@ -11,10 +10,15 @@ public partial class ProductView : UserControl, IView
         InitializeComponent();
     }
 
-    string IView.ButtonDisplay { get => "Productos"; }
 
-    void IView.Load()
+    public string ButtonDisplay => "Productos";
+    public PackIconKind Icon => PackIconKind.Package;
+    public void Load()
     {
-        MessageBox.Show("I just load.");
+        
+    }
+    public void Clear()
+    {
+
     }
 }

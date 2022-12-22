@@ -1,13 +1,9 @@
-﻿using Bosco.Core.Services;
-
-namespace Bosco.Core.ViewModels;
+﻿namespace Bosco.Core.ViewModels;
 
 public class ProductViewModel
 {
-    private readonly IFrontendNotifier frontendNotifier;
 
-    public ProductViewModel(IFrontendNotifier frontendNotifier)
+    public ProductViewModel()
 	{
-        this.frontendNotifier = frontendNotifier;
     }
 }

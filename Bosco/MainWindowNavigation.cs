@@ -1,41 +1,45 @@
-﻿using Bosco.Core.Services;
-using Bosco.XAML.Views;
+﻿using Bosco.Core.Collections;
+using Bosco.Core.Models.FrontEndControllers;
+using Bosco.Core.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Windows;
+using System.Windows.Input;
 
-namespace Bosco
+namespace Bosco;
+
+public class MainWindowNavigation
 {
-    public class MainWindowNavigation
+    public ViewCollection Views { get; set; }
+    public List<NavButtonModel> ViewNames { get; set; }
+    public ICommand Nav_Command => new RelayCommand(Nav_Execute);
+    public MainWindowNavigation(IEnumerable<IView> views)
     {
-        List<IView> Views;
-        private IView? selectedView;
-        private readonly IFrontendNotifier frontendNotifier;
-
-        public IView? SelectedView
+        Views = new(views);
+        ViewNames = new();
+        foreach(IView view in Views)
         {
-            get => selectedView;
-            set
-            {
-                if (value is not null && value != selectedView)
-                {
-                    frontendNotifier.SetProperty(ref selectedView, value);
-                    selectedView!.Load();
-                }
-            }
-        }
-        public MainWindowNavigation(IEnumerable<IView> views,IFrontendNotifier frontendNotifier)
-        {
-            Views = new(views);
-            selectedView = null;
-            Test();
-            this.frontendNotifier = frontendNotifier;
-        }
-        private async void Test()
-        {
-            await Task.Delay(1000);
-            SelectedView = Views.First();
+            ViewNames.Add(new(view.ButtonDisplay,view.Icon,false));
         }
     }
+
+    private void Nav_Execute(object? param)
+    {
+        if (param is null)
+        {
+            MessageBox.Show("No se ha podido cargar la vista seleccionada.");
+            return;
+        }
+
+        if(param is NavButtonModel button)
+        {
+            Views.SelectViewByIndex(ViewNames.IndexOf(button));
+        }
+        
+    } 
+    
+    
+    
 }
