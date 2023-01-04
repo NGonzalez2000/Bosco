@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="Bosco.XAML.Controls.AddressControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Bosco.XAML.Controls"
+             xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:models="clr-namespace:Bosco.Core.Models;assembly=Bosco.Core"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=models:AddressModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Dirección"
+                   FontSize="{DynamicResource SecondaryHeaderFontSize}"
+                   HorizontalAlignment="Left"
+                   Margin="30 0"/>
+        <UniformGrid Grid.Row="1"
+                     Columns="2">
+            <TextBox 
+                materialDesign:HintAssist.Hint="País"
+                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                Margin="30 15"
+                CharacterCasing="Upper"
+                Text="{Binding Path=Country}"/>
+            <TextBox 
+                materialDesign:HintAssist.Hint="Provincia"
+                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                Margin="30 15"
+                CharacterCasing="Upper"
+                Text="{Binding Path=State}"/>
+            <TextBox 
+                materialDesign:HintAssist.Hint="Ciudad"
+                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                Margin="30 15"
+                CharacterCasing="Upper"
+                Text="{Binding Path=City}"/>
+            <TextBox 
+                materialDesign:HintAssist.Hint="Código Postal"
+                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                Margin="30 15"
+                CharacterCasing="Upper"
+                Text="{Binding Path=PostalCode}"/>
+            <TextBox 
+                materialDesign:HintAssist.Hint="Calle"
+                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                Margin="30 15"
+                CharacterCasing="Upper"
+                Text="{Binding Path=Street}"/>
+            <TextBox 
+                materialDesign:HintAssist.Hint ="Número"
+                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                Margin="30 15"
+                CharacterCasing="Upper"
+                Text="{Binding Path=StreetNumber}"/>
+        </UniformGrid>
+    </Grid>
+</UserControl>

@@ -1,5 +1,6 @@
 ﻿using Bosco.Core.Collections;
 using Bosco.Core.Data;
+using Bosco.Core.Data.Interface;
 using Bosco.Core.DialogModels;
 using Bosco.Core.Models;
 using Bosco.Core.Services;
@@ -11,21 +12,21 @@ using System.Windows.Input;
 
 namespace Bosco.Core.ViewModels;
 
-public class CategoryViewModel : INotify
+public class CategoryViewModel : INotify, IViewModel
 {
 	private IDialog? dialogType;
-    private readonly CategoriesDb dbcontext;
+    private readonly ICategoriesDb dbcontext;
 	private CancellationTokenSource? tokenSource;
     public ListViewCollection<CategoryModel> Categories { get; set; }
 	public ICommand NewCategory_Command => new RelayCommand(_ => NewCategory_Execute());
 	public ICommand EditCategory_Command => new RelayCommand(_ => EditCategory_Execute());
 	public ICommand DeleteCategory_Command => new RelayCommand(_ => DeleteCategory_Execute());
-	public CategoryViewModel(CategoriesDb dbcontext)
+	public CategoryViewModel(ICategoriesDb dbcontext)
 	{
         this.dbcontext = dbcontext;
 		Categories = new();
     }
-	public async void Load()
+	public async void Opening()
 	{
 		try
 		{
@@ -42,7 +43,7 @@ public class CategoryViewModel : INotify
 
 
 	}
-	public void Clear()
+	public void Closing()
 	{
 		if (tokenSource is not null)
 		{

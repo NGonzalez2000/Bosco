@@ -6,31 +6,31 @@ using System.Windows.Controls;
 
 namespace Bosco.XAML.Views;
 
-public partial class CategoryView : UserControl, IView
+public partial class ProviderView : UserControl, IView
 {
-    public CategoryView(CategoryViewModel dataContext)
+    public ProviderView(ProviderViewModel dataContext)
     {
         InitializeComponent();
-        dataContext.SetDialog(new CategoryDialog());
+        dataContext.SetDialog(new ProviderDialog());
         DataContext = dataContext;
     }
+    public string ButtonDisplay => "Proveedores";
 
-    public string ButtonDisplay => "Categorías";
-    public PackIconKind Icon => PackIconKind.Category; 
+    public PackIconKind Icon => PackIconKind.BriefcaseAccount;
+
     public void Load()
     {
-        if(DataContext is IViewModel viewModel)
+        if (DataContext is IViewModel viewModel)
         {
             viewModel.Opening();
         }
     }
     public void Clear()
     {
-        if(DataContext is IViewModel viewModel)
+        if (DataContext is IViewModel viewModel)
         {
             viewModel.Closing();
         }
     }
 
-    
 }

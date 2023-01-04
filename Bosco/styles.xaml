@@ -6,6 +6,5 @@
         <Setter Property="Height" Value="50" />
     </Style>
 
-    
-       
+
 </ResourceDictionary>

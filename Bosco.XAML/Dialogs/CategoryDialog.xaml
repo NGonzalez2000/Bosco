@@ -8,8 +8,10 @@
              xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              d:DataContext="{d:DesignInstance Type=dialogModels:CategoryDialogModel}"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d"
+             MaxHeight="600"
+             MinWidth="400" MaxWidth="600"
+             d:DesignHeight="600" d:DesignWidth="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -26,7 +28,6 @@
         <TextBox 
             Grid.Row="1"
             IsEnabled="{Binding Path=IsEnable}"
-            x:Name="NameTextBox"    
             materialDesign:HintAssist.Hint ="Nombre"
             FontSize="{DynamicResource GeneralFontSize}"
             Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
@@ -38,6 +39,7 @@
         <TextBlock Text="{Binding Path=Category.Error}"
                    Foreground="Red"
                    Grid.Row="2"
+                   FontSize="{DynamicResource GeneralFontSize}"
                    HorizontalAlignment="Center"/>
 
         <UniformGrid Columns="2" Grid.Row="3" Margin="20">

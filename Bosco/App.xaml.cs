@@ -1,4 +1,5 @@
-﻿using Bosco.Core.Data;
+﻿using Bosco.Core.Data.Class;
+using Bosco.Core.Data.Interface;
 using Bosco.Core.Services;
 using Bosco.Core.ViewModels;
 using Bosco.XAML.Views;
@@ -22,10 +23,20 @@ public partial class App : Application
 	private void ServiceConfiguration(HostBuilderContext context, IServiceCollection services)
 	{
 		services
-			.AddSingleton<CategoriesDb>()
-			.AddSingleton<CategoryViewModel>()
-			.AddSingleton<IView, ProductView>()
+			// DBContext
+			.AddSingleton<ICategoriesDb, CategoriesDb>()
+			.AddSingleton<IProvidersDb, ProviderDb>()
+
+            // ViewModels
+            .AddSingleton<CategoryViewModel>()
+            .AddSingleton<ProviderViewModel>()
+
+            //Views
+            .AddSingleton<IView, ProductView>()
 			.AddSingleton<IView, CategoryView>()
+			.AddSingleton<IView, ProviderView>()
+            
+			// Main
 			.AddSingleton<MainWindowNavigation>();
 	}
 
@@ -33,7 +44,8 @@ public partial class App : Application
     {
 		await AppHost!.StartAsync();
 
-		MainWindowNavigation navigation = AppHost.Services.GetRequiredService<MainWindowNavigation>();
+
+        MainWindowNavigation navigation = AppHost.Services.GetRequiredService<MainWindowNavigation>();
 		MainWindow MainWindow = new() { DataContext = navigation };
 		MainWindow.Show();
 

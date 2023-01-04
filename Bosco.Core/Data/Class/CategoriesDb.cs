@@ -1,14 +1,14 @@
-﻿using Bosco.Core.Models;
-using Bosco.Core.Services;
+﻿using Bosco.Core.Data.Interface;
+using Bosco.Core.Models;
 using Dapper;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Bosco.Core.Data;
+namespace Bosco.Core.Data.Class;
 
-public class CategoriesDb : DbContext, ICategories
+public class CategoriesDb : DbContext, ICategoriesDb
 {
     public async Task<int> Insert(CategoryModel category)
     {

@@ -57,9 +57,16 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Category" />
+    <Folder Include="Provider" />
+    <Folder Include="DBReset" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Category\Categories.sql" />
+    <Build Include="Provider\Providers.sql" />
+    <Build Include="Provider\ProviderPhones.sql" />
+    <Build Include="Provider\ProviderEmails.sql" />
+    <Build Include="Provider\ProviderAddress.sql" />
+    <Build Include="DBReset\dbReset.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bosco.SQL.publish.xml" />

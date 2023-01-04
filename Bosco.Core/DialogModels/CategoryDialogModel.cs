@@ -1,4 +1,5 @@
 ﻿using Bosco.Core.Data;
+using Bosco.Core.Data.Interface;
 using Bosco.Core.Models;
 using Bosco.Core.Services;
 using MaterialDesignThemes.Wpf;
@@ -10,13 +11,13 @@ namespace Bosco.Core.DialogModels;
 
 public class CategoryDialogModel : INotify
 {
-	private bool closedFlag = false;
     private readonly IDialog dialog;
-    private readonly CategoriesDb dbcontext;
+    private readonly ICategoriesDb dbcontext;
 	private CancellationToken token;
 	private const string dialogId = "Category_Dialog";
 	private string title;
 	private string content;
+	private bool closedFlag = false;
 	private bool wasDeleted;
 	public bool IsEnable { get; set; }
     public string Title
@@ -30,10 +31,9 @@ public class CategoryDialogModel : INotify
 		set => SetProperty(ref content, value);
 	}
 	public CategoryModel Category { get; set; }
-	public CategoryDialogModel(IDialog dialog, CategoriesDb dbcontext)
+	public CategoryDialogModel(IDialog dialog, ICategoriesDb dbcontext)
 	{
 		Category = new();
-		OnPropertyChanged();
 		title = string.Empty;
 		content = string.Empty;
         this.dialog = dialog;
@@ -83,9 +83,10 @@ public class CategoryDialogModel : INotify
 
         Category.ChechPropertyErrors();
 
-
         Title = "Eliminar Categoría";
 		Content = "ELIMINAR";
+
+		this.token = token;
 
 		await DialogHost.Show(dialog, dialogId, closingEventHandler: ClosingEventHandler_Delete);
 

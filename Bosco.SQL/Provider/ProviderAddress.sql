@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[ProviderAddress]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
+	[ProviderId] INT FOREIGN KEY REFERENCES [dbo].[Providers](Id) NOT NULL,
+	[Country] NVARCHAR(60) NOT NULL,
+	[State] NVARCHAR(60) NOT NULL,
+	[City] NVARCHAR(60) NOT NULL,
+	[PostalCode] NVARCHAR(60) NOT NULL,
+	[Street] NVARCHAR(60) NOT NULL,
+	[StreetNumber] NVARCHAR(60) NOT NULL,
+)
