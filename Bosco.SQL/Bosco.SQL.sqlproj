@@ -56,17 +56,26 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Category" />
-    <Folder Include="Provider" />
     <Folder Include="DBReset" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\Category" />
+    <Folder Include="dbo\Provider" />
+    <Folder Include="dbo\Brand" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Category\Categories.sql" />
-    <Build Include="Provider\Providers.sql" />
-    <Build Include="Provider\ProviderPhones.sql" />
-    <Build Include="Provider\ProviderEmails.sql" />
-    <Build Include="Provider\ProviderAddress.sql" />
-    <Build Include="DBReset\dbReset.sql" />
+    <None Include="DBReset\dbReset.sql" />
+    <Build Include="dbo\Stored Procedures\sp_Reset_ProviderPhoneId.sql" />
+    <Build Include="dbo\Stored Procedures\sp_Reset_ProviderId.sql" />
+    <Build Include="dbo\Stored Procedures\sp_Reset_ProviderEmailId.sql" />
+    <Build Include="dbo\Stored Procedures\sp_Reset_ProviderAddressId.sql" />
+    <Build Include="dbo\Stored Procedures\sp_Reset_CategoryId.sql" />
+    <Build Include="dbo\Category\Categories.sql" />
+    <Build Include="dbo\Provider\ProviderAddress.sql" />
+    <Build Include="dbo\Provider\ProviderEmails.sql" />
+    <Build Include="dbo\Provider\ProviderPhones.sql" />
+    <Build Include="dbo\Provider\Providers.sql" />
+    <Build Include="dbo\Brand\Brands.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bosco.SQL.publish.xml" />

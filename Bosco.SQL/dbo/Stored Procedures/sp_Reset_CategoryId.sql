@@ -1,0 +1,15 @@
+﻿CREATE PROCEDURE [dbo].[sp_Reset_CategoryId]
+AS
+BEGIN
+	SET NOCOUNT ON;
+	IF EXISTS( SELECT 1 FROM Categories)
+BEGIN
+	DECLARE @newId AS INT = (SELECT TOP 1 Id FROM Categories ORDER BY Id DESC)
+	DBCC CHECKIDENT('Categories', RESEED, @newId);
+END
+ELSE
+BEGIN
+	DBCC CHECKIDENT('Categories', RESEED, 0);
+END
+   
+END

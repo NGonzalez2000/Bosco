@@ -1,0 +1,15 @@
+﻿CREATE PROCEDURE [dbo].[sp_Reset_ProviderId]
+AS
+BEGIN
+	SET NOCOUNT ON;
+	IF EXISTS( SELECT 1 FROM Providers)
+BEGIN
+	DECLARE @newId AS INT = (SELECT TOP 1 Id FROM Providers ORDER BY Id DESC)
+	DBCC CHECKIDENT('Providers', RESEED, @newId);
+END
+ELSE
+BEGIN
+	DBCC CHECKIDENT('Providers', RESEED, 0);
+END
+   
+END
