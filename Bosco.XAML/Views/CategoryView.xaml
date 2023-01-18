@@ -5,10 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Bosco.XAML.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:viewmodels="clr-namespace:Bosco.Core.ViewModels;assembly=Bosco.Core"
+             xmlns:viewmodels="clr-namespace:Bosco.Core.ViewModels;assembly=Bosco.Core" xmlns:filters="clr-namespace:Bosco.XAML.Controls.Filters" xmlns:sorts="clr-namespace:Bosco.XAML.Controls.Sorts"
              d:DataContext="{d:DesignInstance Type=viewmodels:CategoryViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
     <materialDesign:DialogHost
         Identifier="Category_Dialog"
         DialogTheme="Inherit"
@@ -16,8 +17,13 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             <!-- HEADER -->
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource NavButton}"
@@ -30,10 +36,32 @@
                         Content="ELIMINAR"
                         Command="{Binding Path=DeleteCategory_Command}"/>
             </StackPanel>
+
+            <!-- Filter -->
+            <filters:MainFilterView Grid.Row="1"
+                                    FilterCommand="{Binding Path=FilterCategories_Command}">
+                <filters:MainFilterView.FilterContent>
+                    <filters:CategoryFilter>
+                        <filters:CategoryFilter DataContext="{Binding Path=CategoriesFilter}"/>
+                    </filters:CategoryFilter>
+                </filters:MainFilterView.FilterContent>
+            </filters:MainFilterView>
+            
+            <!-- Sort -->
+            <sorts:MainSortView Grid.Row="1"
+                                Grid.Column="1"
+                                SortCommand="{Binding Path=SortCategories_Command}">
+                <sorts:MainSortView.SortContent>
+                    <sorts:CategorySort>
+                        <sorts:CategorySort DataContext="{Binding Path=CategoriesSort}"/>
+                    </sorts:CategorySort>
+                </sorts:MainSortView.SortContent>
+            </sorts:MainSortView>
             <!-- BODY -->
             <ListView ItemsSource="{Binding Path=Categories,UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{Binding Path=Categories.SelectedItem}"
-                      Grid.Row="1">
+                      Grid.Row="2"
+                      Grid.ColumnSpan="2">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Categoría"

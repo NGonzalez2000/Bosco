@@ -4,5 +4,6 @@
     {
         public void Opening();
         public void Closing();
+        public void SetDialog(IDialog dialogType);
     }
 }

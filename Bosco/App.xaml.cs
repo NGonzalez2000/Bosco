@@ -26,15 +26,18 @@ public partial class App : Application
 			// DBContext
 			.AddSingleton<ICategoriesDb, CategoriesDb>()
 			.AddSingleton<IProvidersDb, ProviderDb>()
+			.AddSingleton<IBrandDb, BrandDb>()
 
             // ViewModels
             .AddSingleton<CategoryViewModel>()
             .AddSingleton<ProviderViewModel>()
+			.AddSingleton<BrandViewModel>()
 
             //Views
             .AddSingleton<IView, ProductView>()
 			.AddSingleton<IView, CategoryView>()
 			.AddSingleton<IView, ProviderView>()
+			.AddSingleton<IView, BrandView>()
             
 			// Main
 			.AddSingleton<MainWindowNavigation>();

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Bosco.XAML.Views"
-             xmlns:viewmodels="clr-namespace:Bosco.Core.ViewModels;assembly=Bosco.Core" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewmodels="clr-namespace:Bosco.Core.ViewModels;assembly=Bosco.Core" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:filters="clr-namespace:Bosco.XAML.Controls.Filters" xmlns:sorts="clr-namespace:Bosco.XAML.Controls.Sorts"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewmodels:ProviderViewModel }"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -14,8 +14,13 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             <!-- HEADER -->
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource NavButton}"
@@ -29,15 +34,38 @@
                         Command="{Binding Path=DeleteProvider_Command}"/>
             </StackPanel>
 
+            <!-- filter -->
+            <filters:MainFilterView Grid.Row="1"
+                                    FilterCommand="{Binding Path=FilterProviders_Command}">
+                <filters:MainFilterView.FilterContent>
+                    <filters:ProviderFilter>
+                        <filters:ProviderFilter DataContext="{Binding Path=ProviderFilter}"/>
+                    </filters:ProviderFilter>
+                </filters:MainFilterView.FilterContent>
+            </filters:MainFilterView>
+
+            <!-- Sort -->
+            <sorts:MainSortView Grid.Row="1"
+                                Grid.Column="1"
+                                SortCommand="{Binding Path=SortProviders_Command}">
+                <sorts:MainSortView.SortContent>
+                    <sorts:ProviderSort>
+                        <sorts:ProviderSort DataContext="{Binding Path=ProviderSort}"/>
+                    </sorts:ProviderSort>
+                </sorts:MainSortView.SortContent>
+            </sorts:MainSortView>
             <ListView ItemsSource="{Binding Path=Providers}"
                   SelectedItem="{Binding Path=Providers.SelectedItem}"
-                  Grid.Row="1">
+                  Grid.Row="2"
+                      Grid.ColumnSpan="2">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Nombre"
                                     DisplayMemberBinding="{Binding Path=Name}"/>
                         <GridViewColumn Header="CUIT"
                                     DisplayMemberBinding="{Binding Path=CUIT.CUIT}"/>
+                        <GridViewColumn Header="Pagina Web"
+                                    DisplayMemberBinding="{Binding Path=Web}"/>
                         <GridViewColumn Header="Emails">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -74,6 +102,20 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+                        <GridViewColumn Header="Observacion"
+                                    DisplayMemberBinding="{Binding Path=Observation}"/>
+                        <GridViewColumn Header="Pais"
+                                    DisplayMemberBinding="{Binding Path=Address.Country}"/>
+                        <GridViewColumn Header="Provincia"
+                                    DisplayMemberBinding="{Binding Path=Address.State}"/>
+                        <GridViewColumn Header="Ciudad"
+                                    DisplayMemberBinding="{Binding Path=Address.City}"/>
+                        <GridViewColumn Header="Calle"
+                                    DisplayMemberBinding="{Binding Path=Address.Street}"/>
+                        <GridViewColumn Header="Altura"
+                                    DisplayMemberBinding="{Binding Path=Address.StreetNumber}"/>
+                        <GridViewColumn Header="Codigo Postal"
+                                    DisplayMemberBinding="{Binding Path=Address.PostalCode}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

@@ -80,4 +80,7 @@
   <ItemGroup>
     <None Include="Bosco.SQL.publish.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Stored Procedures\sp_Reset_BrandId.sql" />
+  </ItemGroup>
 </Project>

@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="Bosco.XAML.Dialogs.BrandDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Bosco.XAML.Dialogs"
+             xmlns:dialogModels="clr-namespace:Bosco.Core.DialogModels;assembly=Bosco.Core"
+             xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:converters="clr-namespace:Bosco.XAML.Converters"
+             d:DataContext="{d:DesignInstance Type=dialogModels:BrandDialogModel}"
+             mc:Ignorable="d"
+             MaxHeight="600"
+             MinWidth="400" MaxWidth="600"
+             d:DesignHeight="600" d:DesignWidth="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Text="{Binding Path=Title}"
+            Margin="30"
+            FontSize="{DynamicResource SecondaryHeaderFontSize}"/>
+
+        <StackPanel
+            Grid.Row="1"
+            IsEnabled="{Binding Path=IsEnable}"
+            Margin="30">
+            <TextBox 
+                Margin="0 15"
+                materialDesign:HintAssist.Hint ="Nombre"
+                FontSize="{DynamicResource GeneralFontSize}"
+                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                CharacterCasing="Upper"
+                Text="{Binding Path=Brand.Name,ValidatesOnExceptions=True,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}">
+            </TextBox>
+            <ComboBox ItemsSource="{Binding Path=Providers}"
+                      SelectedItem="{Binding Path=Providers.SelectedItem}"
+                      Margin="0 15"
+                      StaysOpenOnEdit="True"
+                      IsEditable="True"
+                      IsTextSearchEnabled="False"
+                      GotKeyboardFocus="CbProvider_GotKeyboardFocus"
+                      materialDesign:TextFieldAssist.HasClearButton="True"
+                      Text="{Binding Path=SearchText, Delay=250}"
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                      materialDesign:HintAssist.Hint="Proveedor"
+                      DisplayMemberPath="Name">
+            </ComboBox>
+            <CheckBox 
+                Style="{DynamicResource MaterialDesignAccentCheckBox}"
+                Margin="0 15"
+                Content="Precio en dolares."
+                IsChecked="{Binding Path=Brand.IsDolarValue}"/>
+        </StackPanel>
+       
+
+        <TextBlock Text="{Binding Path=Brand.Error}"
+                   Foreground="Red"
+                   Grid.Row="2"
+                   TextWrapping="Wrap"
+                   FontSize="{DynamicResource GeneralFontSize}"
+                   HorizontalAlignment="Center"/>
+
+        <UniformGrid Columns="2" Grid.Row="3" Margin="20">
+            <Button Content="{Binding Path=Content}" FontSize="{DynamicResource ButtonFontSize}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="0 0 5 0">
+                <Button.CommandParameter>
+                    <system:Boolean>True</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+            <Button Content="CANCELAR" FontSize="{DynamicResource ButtonFontSize}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="5 0 0 0">
+                <Button.CommandParameter>
+                    <system:Boolean>False</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+        </UniformGrid>
+
+    </Grid>
+</UserControl>

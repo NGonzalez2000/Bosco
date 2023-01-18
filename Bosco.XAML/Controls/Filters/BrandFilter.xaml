@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Bosco.XAML.Controls.Filters.BrandFilter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Bosco.XAML.Controls.Filters"
+             xmlns:filtermodels="clr-namespace:Bosco.Core.Models.FilterModels;assembly=Bosco.Core"
+             mc:Ignorable="d" 
+             
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=filtermodels:BrandFilterModel}">
+    <UniformGrid Columns="2">
+        <TextBox Text="{Binding Path=Brand.Name}"
+                 CharacterCasing="Upper"
+                 Margin="15 0"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 materialDesign:HintAssist.Hint="Nombre"
+                 VerticalAlignment="Center"/>
+        
+        <ComboBox ItemsSource="{Binding Path=Providers}"
+                  DisplayMemberPath="Name"
+                  StaysOpenOnEdit="True"
+                  IsEditable="True"
+                  IsTextSearchEnabled="False"
+                  GotKeyboardFocus="CbProvider_GotKeyboardFocus"
+                  materialDesign:TextFieldAssist.HasClearButton="True"
+                  
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  materialDesign:HintAssist.Hint="Proveedor"
+                  
+                  Text="{Binding Path=Provider_SearchText,Delay=250}" 
+                  SelectedItem="{Binding Path=Providers.SelectedItem}"
+                  Margin="15 0"/>
+    </UniformGrid>
+</UserControl>

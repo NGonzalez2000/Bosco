@@ -1,5 +1,4 @@
-﻿using Bosco.Core.Data;
-using Bosco.Core.Data.Interface;
+﻿using Bosco.Core.Data.Interface;
 using Bosco.Core.Models;
 using Bosco.Core.Services;
 using MaterialDesignThemes.Wpf;

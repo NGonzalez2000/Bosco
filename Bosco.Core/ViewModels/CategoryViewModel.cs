@@ -1,8 +1,9 @@
 ﻿using Bosco.Core.Collections;
-using Bosco.Core.Data;
 using Bosco.Core.Data.Interface;
 using Bosco.Core.DialogModels;
 using Bosco.Core.Models;
+using Bosco.Core.Models.FilterModels;
+using Bosco.Core.Models.SortModels;
 using Bosco.Core.Services;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -18,21 +19,30 @@ public class CategoryViewModel : INotify, IViewModel
     private readonly ICategoriesDb dbcontext;
 	private CancellationTokenSource? tokenSource;
     public ListViewCollection<CategoryModel> Categories { get; set; }
+	public CategoryFilterModel CategoriesFilter { get; set; }
+	public CategorySortModel CategoriesSort { get; set; }
 	public ICommand NewCategory_Command => new RelayCommand(_ => NewCategory_Execute());
 	public ICommand EditCategory_Command => new RelayCommand(_ => EditCategory_Execute());
 	public ICommand DeleteCategory_Command => new RelayCommand(_ => DeleteCategory_Execute());
+	public ICommand FilterCategories_Command => new RelayCommand(_ => FilterCategories_Execute());
+	public ICommand SortCategories_Command => new RelayCommand(_ => SortCategories_Execute());
 	public CategoryViewModel(ICategoriesDb dbcontext)
 	{
         this.dbcontext = dbcontext;
 		Categories = new();
+		CategoriesFilter = new();
+		CategoriesSort = new();
     }
 	public async void Opening()
 	{
 		try
 		{
 			Categories = new(await dbcontext.SelectCategories());
-		}
-		catch (Exception ex)
+            Categories.SetFilter(CategoriesFilter.Filter);
+			Categories.SetSortDescription(CategoriesSort.Sort());
+			RefreshView();
+        }
+        catch (Exception ex)
 		{
 			Categories = new();
 
@@ -118,4 +128,15 @@ public class CategoryViewModel : INotify, IViewModel
 		if (response) Categories.Remove(Categories.SelectedItem);
 
 	}
+	private void FilterCategories_Execute()
+	{
+		RefreshView();
+	}
+	private void SortCategories_Execute()
+	{
+		Categories.SetSortDescription(CategoriesSort.Sort());
+		RefreshView();
+		OnPropertyChanged(nameof(Categories));
+	}
+	private void RefreshView() => Categories.Refresh();
 }

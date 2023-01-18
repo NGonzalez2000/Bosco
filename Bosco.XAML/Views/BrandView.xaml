@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="Bosco.XAML.Views.BrandView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Bosco.XAML.Views"
+             xmlns:viewmodels="clr-namespace:Bosco.Core.ViewModels;assembly=Bosco.Core" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:filters="clr-namespace:Bosco.XAML.Controls.Filters" xmlns:sorts="clr-namespace:Bosco.XAML.Controls.Sorts"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:BrandViewModel }"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <materialDesign:DialogHost Identifier="Brand_Dialog"
+                               DialogTheme="Inherit"
+                               x:Name="_dialogHost">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!-- HEADER -->
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource NavButton}"
+                        Content="CREAR"
+                        Command="{Binding Path=NewBrand_Command}"/>
+                <Button Style="{StaticResource NavButton}"
+                        Content="EDITAR"
+                        Command="{Binding Path=EditBrand_Command}"/>
+                <Button Style="{StaticResource NavButton}"
+                        Content="ELIMINAR"
+                        Command="{Binding Path=DeleteBrand_Command}"/>
+            </StackPanel>
+
+            <filters:MainFilterView Grid.Row="1"
+                                    FilterCommand="{Binding Path=FilterBrands_Command}">
+                <filters:MainFilterView.FilterContent>
+                    <filters:BrandFilter>
+                        <filters:BrandFilter DataContext="{Binding Path=BrandFilter}"/>
+                    </filters:BrandFilter>
+                </filters:MainFilterView.FilterContent>
+            </filters:MainFilterView>
+
+            <!-- Sort -->
+            <sorts:MainSortView Grid.Row="1"
+                                Grid.Column="1"
+                                SortCommand="{Binding Path=SortBrands_Command}">
+                <sorts:MainSortView.SortContent>
+                    <sorts:BrandSort>
+                        <sorts:BrandSort DataContext="{Binding Path=BrandSort}"/>
+                    </sorts:BrandSort>
+                </sorts:MainSortView.SortContent>
+            </sorts:MainSortView>
+
+            <ListView ItemsSource="{Binding Path=Brands}"
+                      SelectedItem="{Binding Path=Brands.SelectedItem}"
+                      Grid.Row="2"
+                      Grid.ColumnSpan="2">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Nombre"
+                                    DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn Header="Proveedor"
+                                    DisplayMemberBinding="{Binding Path=Provider.Name}"/>
+                        <GridViewColumn Header="Es en dolares">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <materialDesign:PackIcon Kind="Check"
+                                                             Visibility="{Binding Path=IsDolarValue, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>

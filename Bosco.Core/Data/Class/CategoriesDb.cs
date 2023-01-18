@@ -13,7 +13,10 @@ public class CategoriesDb : DbContext, ICategoriesDb
     public async Task<int> Insert(CategoryModel category)
     {
         using SqlConnection connection = new(CnnStr(Bosco.Default.ConnectionType));
-        return (await connection.QueryAsync<int>("INSERT INTO [dbo].[Categories] OUTPUT INSERTED.ID values(@Name)", category)).First();
+        string query =
+            $"exec sp_Reset_CategoryId;" +
+            $"INSERT INTO [dbo].[Categories] OUTPUT INSERTED.ID values('{category.Name}')";
+        return (await connection.QueryAsync<int>(query, category)).First();
     }
 
     public async Task Update(CategoryModel category)
